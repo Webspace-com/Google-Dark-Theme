@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Google Unified Dark Theme - 9.2.2 (Consistent Colors)
+// @name         Google Unified Dark Theme - Custom Mic and google lens icon change - results page top section modified - locked.
 // @namespace    http://tampermonkey.net/
-// @version      9.2.2
-// @description  A pure black theme with consistent colors for the search bar and dropdown menu.
+// @version      10.2.1
+// @description  A pure black theme with a picture-perfect, multi-colored Google Lens icon and a user-provided custom mic.
 // @author       Chaitanya
 // @match        https://www.google.com/*
 // @grant        GM_addStyle
@@ -12,9 +12,25 @@
 (function() {
     'use strict';
 
-    // --- 1. SVG Logo Definitions (Unchanged) ---
-    const coloredLogoSVG_Large = `<svg class="lnXdpd" height="92" viewBox="0 0 272 92" width="272" xmlns="http://www.w3.org/2000/svg" data-logo-fixed="true"><path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#4285F4"></path><path d="M163.49 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"></path><path d="M209.18 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#FBBC05"></path><path d="M224.69 3v65h-9.5V3h9.5z" fill="#4285F4"></path><path d="M261.71 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#34A853"></path><path d="M35.29 41.41V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49.01z" fill="#EA4335"></path></svg>`;
+    // --- 1. SVG Logo Definitions ---
+
+    const coloredLogoSVG_Large = `<svg class="lnXdpd" height="92" viewBox="0 0 272 92" width="272" xmlns="http://www.w3.org/2000/svg" data-logo-fixed="true"><path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"></path><path d="M163.49 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#FBBC05"></path><path d="M209.18 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#4285F4"></path><path d="M224.69 3v65h-9.5V3h9.5z" fill="#34A853"></path><path d="M261.71 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#EA4335"></path><path d="M35.29 41.41V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.89.36 34.91.36 15.93 16.32.47 35.3.47c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.97-6.72-13.86 0-24.7 11.17-24.7 25.03 0 13.86 10.84 25.03 24.7 25.03 8.99 0 14.11-3.61 17.39-6.89 2.66-2.66 4.41-6.46 5.1-11.65l-22.49.01z" fill="#4285F4"></path></svg>`;
     const coloredLogoSVG_Small = `<svg height="30" viewBox="0 0 92 30" width="92" xmlns="http://www.w3.org/2000/svg" data-logo-fixed="true"><path d="M38.9 15.51c0 4.26-3.32 7.39-7.4 7.39s-7.4-3.14-7.4-7.39c0-4.28 3.32-7.39 7.4-7.39s7.4 3.1 7.4 7.39zm-3.24 0c0-2.66-1.93-4.48-4.16-4.48-2.23 0-4.16 1.82-4.16 4.48 0 2.63 1.93 4.48 4.16 4.48 2.23 0 4.16-1.85 4.16-4.48z" fill="#EA4335"></path><path d="M11.96 22.98C5.63 22.98.31 17.83.31 11.5S5.63.02 11.96.02c3.5 0 5.99 1.37 7.87 3.16L17.62 5.4c-1.34-1.26-3.16-2.24-5.66-2.24-4.62 0-8.23 3.72-8.23 8.34 0 4.62 3.61 8.34 8.23 8.34 3 0 4.7-1.2 5.79-2.3.9-.9 1.49-2.2 1.74-4.17H12v-3.14h10.52c.11.56.17 1.23.17 1.96 0 2.35-.64 5.49-2.72 7.56-2.02 2.11-4.59 3.23-8.01 3.23z" fill="#4285F4"></path><path d="M54.9 15.51c0 4.26-3.32 7.39-7.4 7.39s-7.4-3.14-7.4-7.39c0-4.28 3.32-7.39 7.4-7.39s7.4 3.1 7.4 7.39zm-3.24 0c0-2.66-1.93-4.48-4.16-4.48-2.23 0-4.16 1.82-4.16 4.48 0 2.63 1.93 4.48 4.16 4.48 2.23 0 4.16-1.85 4.16-4.48z" fill="#FBBC05"></path><path d="M70 8.56v13.27c0 5.46-3.05 7.7-6.86 7.7-3.58 0-5.74-2.41-6.55-4.37l2.83-1.18c.5 1.2 1.74 2.63 3.72 2.63 2.44 0 3.78-1.51 3.78-4.34v-1.06h-.11c-.73.9-2.04 1.68-3.81 1.68-3.7 0-7-3.22-7-7.36 0-4.17 3.3-7.42 7-7.42 1.76 0 3.08.78 3.81 1.65h.11v-1.2H70zm-2.86 6.97c0-2.6-1.74-4.51-3.95-4.51-2.24 0-3.95 1.9-3.95 4.51 0 2.58 1.71 4.45 3.95 4.45 2.22.01 3.95-1.87 3.95-4.45z" fill="#4285F4"></path><path d="M75 1.17V22.9h-3V1.17h3z" fill="#34A853"></path><path d="M87.5 17.94l2.48 1.68c-.8 1.2-2.73 3.28-6.06 3.28-4.13 0-7.22-3.25-7.22-7.39 0-4.4 3.11-7.39 6.86-7.39 3.78 0 5.62 3.05 6.23 4.7l.31.85-9.71 4.08c.74 1.48 1.9 2.24 3.53 2.24s2.76-.82 3.58-2.05zm-7.63-2.66l6.5-2.74c-.36-.92-1.43-1.57-2.7-1.57-1.62 0-3.88 1.46-3.8 4.31z" fill="#EA4335"></path></svg>`;
+    const coloredLensSVG = `<svg class="Gdd5U" focusable="false" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" data-lens-fixed="true"><image href="data:image/png;base64,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" height="48" width="48"/>
+    </svg>`;
+
+    // --- NEW: Corrected paths for the colored mic from your provided SVG ---
+    const coloredMicPaths = `
+        <!-- Part 1: Upper Bar (Correct) -->
+        <path fill="#4285F4" d="M480-400q-50 0-85-35t-35-85v-240q0-50 35-85t85-35q50 0 85 35t35 85v240q0 50-35 85t-85 35Z"></path>
+        <!-- Part 2: Curve Shape -->
+        <path fill="#EA4335" d="M440-243q-104-14-172-93t-68-184h80q0 83 58.5 141.5T480-320q83 0 141.5-58.5T680-520h80q0 105-68 184t-172 93Z"></path>
+        <!-- Original Yellow Path (Left Curve) -->
+        <path fill="#FBBC05" d="M200-520h80q0 83 53 146l-58 58q-75-77-75-204Z"></path>
+        <!-- Part 3: Stem (Correct) -->
+        <path fill="#34A853" d="M440-123v-123h80v123h-80Z"></path>
+    `;
+
 
     // --- 2. CSS Styles ---
     const css = `
@@ -23,36 +39,9 @@
         color: #eeeeee !important;
       }
       a { color: #8ab4f8 !important; }
-
-      @keyframes animated-glow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-      }
-
-      /* HOMEPAGE-ONLY Animated Glow */
-      .L3eUgb .SDkEP {
-        position: relative !important;
-        border-radius: 28px !important;
-      }
-      .L3eUgb .SDkEP::before {
-        content: '';
-        position: absolute;
-        top: -3px; left: -3px; right: -3px; bottom: -3px;
-        background: conic-gradient(from 180deg, #ff4b2b, #ff8c00, #1e8e3e, #00c4cc, #3498db, #9334e6, #ff4b2b);
-        border-radius: inherit;
-        z-index: -1;
-        filter: blur(8px);
-        animation: animated-glow 4s linear infinite;
-      }
-      .L3eUgb .RNNXgb {
+      .RNNXgb, .emcav .RNNXgb, .sbfc .RNNXgb, .RNNXgb:hover, .sbfc .RNNXgb:hover, .L3eUgb .RNNXgb {
         background: #1a1a1a !important;
-        border: 3px solid transparent !important;
-      }
-
-      /* DEFAULT Search Bar Style for ALL pages */
-      .RNNXgb, .emcav .RNNXgb, .sbfc .RNNXgb, .RNNXgb:hover, .sbfc .RNNXgb:hover {
-        background: #1a1a1a !important;
-        border-color: #5f6368 !important;
+        border: 1px solid #5f6368 !important;
         box-shadow: none !important;
       }
       textarea.gLFyf { color: #e8eaed !important; }
@@ -61,51 +50,71 @@
          border: 1px solid #5f6368 !important;
          color: #e8eaed !important;
       }
-
-      /* --- MODIFIED: Search Suggestions Dropdown --- */
       .UUbT9, .aajZCb {
-        background: #1a1a1a !important; /* Match search box color */
+        background: #1a1a1a !important;
         border: 1px solid #5f6368 !important;
         border-top: none !important;
       }
-      .sbhl { background: #303134 !important; } /* Highlighted suggestion */
+      .sbhl { background: #303134 !important; }
       .wM6W7d { color: #e8eaed !important; }
-
-      /* General page elements */
       .kp-blk, .ULSxyf, .xpdopen, .MjjYud, .g, .tF2Cxc, .rc, .card-section,
-      #searchform, #gb, .sfbg, .appbar, #top_nav, #extabar, .c93Gbe, .f6F9Be {
+      #searchform, #gb, .sfbg, .appbar, #top_nav, #extabar, .c93Gbe, .f6F9Be, .Fgyi2e {
         background-color: #000000 !important; border: none !important;
       }
     `;
     GM_addStyle(css);
 
 
-    // --- 3. Dynamic Fixes Function (Unchanged) ---
+    // --- 3. Dynamic Fixes Function ---
     const applyFixes = () => {
+        // Homepage Logo Fix
         const homepageLogo = document.querySelector('.L3eUgb .lnXdpd');
         if (homepageLogo && !homepageLogo.dataset.logoFixed) {
             homepageLogo.outerHTML = coloredLogoSVG_Large;
         }
+
+        // Results Page Logo Fix
         const resultsLogoContainer = document.querySelector('#logo');
         if (resultsLogoContainer && !resultsLogoContainer.dataset.logoFixed) {
             const resultsLogoSVG = resultsLogoContainer.querySelector('svg');
-            if (resultsLogoSVG && resultsLogoSVG.querySelector('path[fill="#fff"]')) {
+            if (resultsLogoSVG) { // Check if SVG exists
                 resultsLogoContainer.innerHTML = coloredLogoSVG_Small;
                 resultsLogoContainer.dataset.logoFixed = 'true';
             }
         }
+
+        // --- NEW: Google Mic Icon Fix ---
+        const micIconContainer = document.querySelector('div[jsname="F7uqIe"]');
+        if (micIconContainer) {
+            const micSvgElement = micIconContainer.querySelector('svg');
+            if (micSvgElement && !micSvgElement.dataset.micFixed) {
+                micSvgElement.innerHTML = coloredMicPaths; // Inject your paths
+                micSvgElement.dataset.micFixed = 'true';   // Mark as fixed
+            }
+        }
+
+
+        // Google Lens Icon Fix
+        const lensIconContainer = document.querySelector('div[jsname="R5mgy"]');
+        if (lensIconContainer) {
+            const originalSvg = lensIconContainer.querySelector('svg');
+            if (originalSvg && !originalSvg.dataset.lensFixed) {
+                lensIconContainer.innerHTML = coloredLensSVG;
+            }
+        }
     };
 
-    // --- 4. Run the Script using MutationObserver (Unchanged) ---
+    // --- 4. Run the Script using MutationObserver ---
     const observer = new MutationObserver(applyFixes);
-    if (document.body) {
+    const startObserver = () => {
+        applyFixes();
         observer.observe(document.body, { childList: true, subtree: true });
-    } else {
-        document.addEventListener('DOMContentLoaded', () => {
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-    }
-    applyFixes();
-})();
+    };
 
-//improved search box color in homepage
+    if (document.body) {
+        startObserver();
+    } else {
+        document.addEventListener('DOMContentLoaded', startObserver);
+    }
+
+})();
